@@ -1,0 +1,2521 @@
+# Project-1-Student Details(Kaggle)
+import pandas as pd
+
+student_details = pd.read_csv(r"C:\Users\nasira\Desktop\Student Details-Project 1.csv")
+print(student_details)
+
+
+
+# print(student_details.columns.tolist())
+                    #  Pivot
+
+
+# ===========================================
+# STUDENT PERFORMANCE ANALYSIS PROJECT
+# ===========================================
+
+# Import Libraries
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+# ===========================================
+# Load Dataset
+# ===========================================
+
+
+
+# ===========================================
+# Display Dataset
+# ===========================================
+
+print("First 5 Rows")
+print(student_details.head())
+
+print("\nLast 5 Rows")
+print(student_details.tail())
+
+# ===========================================
+# Shape
+# ===========================================
+
+print("\nShape of Dataset")
+print(student_details.shape)
+
+# ===========================================
+# Column Names
+# ===========================================
+
+print("\nColumn Names")
+# print(student_details.columns.tolist())
+
+# ===========================================
+# Dataset Information
+# ===========================================
+
+print("\nDataset Information")
+print(student_details.info())
+
+# ===========================================
+# Statistical Summary
+# ===========================================
+
+print("\nStatistical Summary")
+print(student_details.describe())
+
+# ===========================================
+# Missing Values
+# ===========================================
+
+print("\nMissing Values")
+print(student_details.isnull().sum())
+
+# ===========================================
+# Duplicate Values
+# ===========================================
+
+print("\nDuplicate Records")
+print(student_details.duplicated().sum())
+
+# ===========================================
+# Remove Duplicate Records
+# ===========================================
+
+student_details = student_details.drop_duplicates()
+
+print("\nAfter Removing Duplicates")
+print(student_details.shape)
+
+# ===========================================
+# Check Data Types
+# ===========================================
+
+print("\nData Types")
+print(student_details.dtypes)
+
+# ===========================================
+# Gender Count
+# ===========================================
+
+print("\nGender Count")
+print(student_details["gender"].value_counts())
+
+# ===========================================
+# Performance Category Count
+# ===========================================
+
+print("\nPerformance Category")
+print(student_details["performance_category"].value_counts())
+
+# ===========================================
+# Student Grade Count
+# ===========================================
+
+print("\nStudent Grade")
+print(student_details["Student Grade"].value_counts())
+
+# ===========================================
+# Mental State Count
+# ===========================================
+
+print("\nMental State")
+print(student_details["mental_state"].value_counts())
+
+# ===========================================
+# Internet Quality
+# ===========================================
+
+print("\nInternet Quality")
+print(student_details["internet_quality"].value_counts())
+
+# ===========================================
+# Learning Style
+# ===========================================
+
+print("\nLearning Style")
+print(student_details["learning_style"].value_counts())
+
+# ===========================================
+# Career Goal
+# ===========================================
+
+print("\nCareer Goal")
+print(student_details["career_goal"].value_counts())
+
+# ===========================================
+# Average Final Exam Score
+# ===========================================
+
+print("\nAverage Final Exam Score")
+print(student_details["final_exam_score"].mean())
+
+# ===========================================
+# Highest Final Exam Score
+# ===========================================
+
+print("\nHighest Final Exam Score")
+print(student_details["final_exam_score"].max())
+
+# ===========================================
+# Lowest Final Exam Score
+# ===========================================
+
+print("\nLowest Final Exam Score")
+print(student_details["final_exam_score"].min())
+
+# ===========================================
+# Top 10 Students
+# ===========================================
+
+top_students = student_details.sort_values(
+    by="final_exam_score",
+    ascending=False
+)
+
+print("\nTop 10 Students")
+print(top_students.head(10))
+
+# ===========================================
+# Bottom 10 Students
+# ===========================================
+
+low_students = student_details.sort_values(
+    by="final_exam_score"
+)
+
+print("\nBottom 10 Students")
+print(low_students.head(10))
+
+
+# 1. Gender Wise Student Count
+gender_count = student_details.groupby(["gender"]).size()
+
+print(gender_count)
+
+# 2. Student Grade Wise Count
+student_grade = student_details.groupby(["Student Grade"]).size()
+
+print(student_grade)
+
+
+# 3. Performance Category Wise Count
+performance = student_details.groupby(["performance_category"]).size()
+
+print(performance)
+
+# 4. Gender & Performance Category
+gender_performance = student_details.groupby(
+    ["gender", "performance_category"]
+).size()
+
+print(gender_performance)
+
+# 5. Learning Style & Career Goal
+learning_career = student_details.groupby(
+    ["learning_style", "career_goal"]
+).size()
+
+print(learning_career)
+
+# 6. Mental State & Student Grade
+mental_grade = student_details.groupby(
+    ["mental_state", "Student Grade"]
+).size()
+
+print(mental_grade)
+
+# 7. Internet Quality & Performance
+internet_performance = student_details.groupby(
+    ["internet_quality", "performance_category"]
+).size()
+
+print(internet_performance)
+
+# 8. Health Condition & Performance
+health_performance = student_details.groupby(
+    ["Health Condition", "performance_category"]
+).size()
+
+print(health_performance)
+
+# 9. Family Support & Student Grade
+family_grade = student_details.groupby(
+    ["family_support", "Student Grade"]
+).size()
+
+print(family_grade)
+
+# 10. Burnout Risk & Mental State
+burnout = student_details.groupby(
+    ["burnout_risk", "mental_state"]
+).size()
+
+print(burnout)
+
+  # ===========================================
+# MATPLOTLIB VISUALIZATION
+# ===========================================
+
+# import matplotlib.pyplot as plt
+
+# # Gender Count
+# gender = student_details["gender"].value_counts().reset_index()
+# gender.columns = ["Gender", "Student Count"]
+
+# # KPI Values
+# total_students = gender["Student Count"].sum()
+
+# male_count = 0
+# female_count = 0
+
+# if "Male" in gender["Gender"].values:
+#     male_count = gender.loc[
+#         gender["Gender"] == "Male", "Student Count"
+#     ].values[0]
+
+# if "Female" in gender["Gender"].values:
+#     female_count = gender.loc[
+#         gender["Gender"] == "Female", "Student Count"
+#     ].values[0]
+
+# # ==========================================
+# # Figure
+# # ==========================================
+
+# fig = plt.figure(figsize=(16,7))
+
+# # ----------- Bar Chart -----------
+# ax = fig.add_axes([0.07,0.15,0.58,0.70])
+
+# bars = ax.bar(
+#     gender["Gender"],
+#     gender["Student Count"],
+#     color=["#4E79A7","#F28E2B"],
+#     edgecolor="black",
+#     width=0.5
+# )
+
+# # Value Labels
+# for bar in bars:
+#     ax.text(
+#         bar.get_x()+bar.get_width()/2,
+#         bar.get_height()+0.5,
+#         int(bar.get_height()),
+#         ha="center",
+#         fontsize=12,
+#         fontweight="bold"
+#     )
+
+# ax.set_title(
+#     "STUDENT GENDER Count",
+#     fontsize=18,
+#     fontweight="bold"
+# )
+
+# ax.set_xlabel("Gender",fontsize=12)
+# ax.set_ylabel("Student Count",fontsize=12)
+
+# ax.grid(axis="y",linestyle="--",alpha=0.4)
+
+# # ==========================================
+# # KPI BOXES
+# # ==========================================
+
+# fig.text(
+#     0.10,0.92,
+#     f"Total Students\n{total_students}",
+#     fontsize=12,
+#     ha="center",
+#     bbox=dict(boxstyle="round",facecolor="#3498DB",edgecolor="black")
+# )
+
+# fig.text(
+#     0.20,0.92,
+#     f"Male\n{male_count}",
+#     fontsize=12,
+#     ha="center",
+#     bbox=dict(boxstyle="round",facecolor="#5DADE2",edgecolor="black")
+# )
+
+# fig.text(
+#     0.30,0.92,
+#     f"Female\n{female_count}",
+#     fontsize=12,
+#     ha="center",
+#     bbox=dict(boxstyle="round",facecolor="#F5B7B1",edgecolor="black")
+# )
+
+# # ==========================================
+# # TABLE (RIGHT SIDE)
+# # ==========================================
+
+# ax_table = fig.add_axes([0.72,0.20,0.25,0.55])
+# ax_table.axis("off")
+
+# table = ax_table.table(
+#     cellText=gender.values,
+#     colLabels=gender.columns,
+#     cellLoc="center",
+#     loc="center"
+# )
+
+# table.auto_set_font_size(False)
+# table.set_fontsize(11)
+# table.scale(1.2,2)
+
+# # Header Color
+# for i in range(len(gender.columns)):
+#     table[(0,i)].set_facecolor("#1F4E78")
+#     table[(0,i)].get_text().set_color("white")
+#     table[(0,i)].get_text().set_weight("bold")
+
+# plt.show()
+
+
+# # ===========================================
+# ==========================================
+# REPORT 2 - STUDENT GRADE DISTRIBUTION
+# ==========================================
+
+# import matplotlib.pyplot as plt
+
+# # Grade Count
+# grade = student_details["Student Grade"].value_counts().sort_index().reset_index()
+# grade.columns = ["Student Grade", "Student Count"]
+
+# # KPI Values
+# total_students = grade["Student Count"].sum()
+
+# A_grade = grade.loc[grade["Student Grade"]=="A","Student Count"].sum()
+# B_grade = grade.loc[grade["Student Grade"]=="B","Student Count"].sum()
+# C_grade = grade.loc[grade["Student Grade"]=="C","Student Count"].sum()
+# D_grade = grade.loc[grade["Student Grade"]=="D","Student Count"].sum()
+# F_grade = grade.loc[grade["Student Grade"]=="F","Student Count"].sum()
+
+# # ==========================================
+# # Figure
+# # ==========================================
+
+# fig = plt.figure(figsize=(16,7))
+
+# # ---------------- Bar Chart ----------------
+
+# ax = fig.add_axes([0.07,0.15,0.58,0.70])
+
+# colors = ["#2ECC71","#3498DB","#F1C40F","#E67E22","#E74C3C"]
+
+# bars = ax.bar(
+#     grade["Student Grade"],
+#     grade["Student Count"],
+#     color=colors,
+#     edgecolor="black",
+#     width=0.5
+# )
+
+# # Value Labels
+
+# for bar in bars:
+#     ax.text(
+#         bar.get_x()+bar.get_width()/2,
+#         bar.get_height()+1,
+#         int(bar.get_height()),
+#         ha="center",
+#         fontsize=12,
+#         fontweight="bold"
+#     )
+
+# ax.set_title(
+#     "STUDENT GRADE DISTRIBUTION",
+#     fontsize=18,
+#     fontweight="bold"
+# )
+
+# ax.set_xlabel("Student Grade",fontsize=12)
+# ax.set_ylabel("Student Count",fontsize=12)
+
+# ax.grid(axis="y",linestyle="--",alpha=0.4)
+
+# # ==========================================
+# # KPI BOXES
+# # ==========================================
+
+# fig.text(
+#     0.08,0.92,
+#     f"Total\n{total_students}",
+#     ha="center",
+#     fontsize=11,
+#     bbox=dict(boxstyle="round",facecolor="#5DADE2",edgecolor="black")
+# )
+
+# fig.text(
+#     0.22,0.92,
+#     f"A Grade\n{A_grade}",
+#     ha="center",
+#     fontsize=11,
+#     bbox=dict(boxstyle="round",facecolor="#58D68D",edgecolor="black")
+# )
+
+# fig.text(
+#     0.36,0.92,
+#     f"B Grade\n{B_grade}",
+#     ha="center",
+#     fontsize=11,
+#     bbox=dict(boxstyle="round",facecolor="#85C1E9",edgecolor="black")
+# )
+
+# fig.text(
+#     0.50,0.92,
+#     f"C Grade\n{C_grade}",
+#     ha="center",
+#     fontsize=11,
+#     bbox=dict(boxstyle="round",facecolor="#F7DC6F",edgecolor="black")
+# )
+
+# fig.text(
+#     0.64,0.92,
+#     f"D/F Grade\n{D_grade+F_grade}",
+#     ha="center",
+#     fontsize=11,
+#     bbox=dict(boxstyle="round",facecolor="#F5B7B1",edgecolor="black")
+# )
+
+# # ==========================================
+# # TABLE
+# # ==========================================
+
+# ax_table = fig.add_axes([0.72,0.20,0.25,0.55])
+# ax_table.axis("off")
+
+# table = ax_table.table(
+#     cellText=grade.values,
+#     colLabels=grade.columns,
+#     cellLoc="center",
+#     loc="center"
+# )
+
+# table.auto_set_font_size(False)
+# table.set_fontsize(11)
+# table.scale(1.2,2)
+
+# for i in range(len(grade.columns)):
+#     table[(0,i)].set_facecolor("#1F4E78")
+#     table[(0,i)].get_text().set_color("white")
+#     table[(0,i)].get_text().set_weight("bold")
+
+# plt.show()
+
+# ==========================================
+# REPORT 3 - PERFORMANCE CATEGORY DISTRIBUTION
+# ==========================================
+
+# ==========================================
+# REPORT 3 - PERFORMANCE CATEGORY DISTRIBUTION
+# ==========================================
+
+# import matplotlib.pyplot as plt
+
+# # ==========================================
+# # Performance Category Count
+# # ==========================================
+
+# performance = (
+#     student_details["performance_category"]
+#     .value_counts()
+#     .sort_index()
+#     .reset_index()
+# )
+
+# performance.columns = ["Performance Category", "Student Count"]
+
+# print(performance)
+
+# # ==========================================
+# # KPI VALUES
+# # ==========================================
+
+# total_students = performance["Student Count"].sum()
+
+# high = performance.loc[
+#     performance["Performance Category"] == "High",
+#     "Student Count"
+# ].sum()
+
+# medium = performance.loc[
+#     performance["Performance Category"] == "Medium",
+#     "Student Count"
+# ].sum()
+
+# low = performance.loc[
+#     performance["Performance Category"] == "Low",
+#     "Student Count"
+# ].sum()
+
+# # ==========================================
+# # FIGURE
+# # ==========================================
+
+# fig = plt.figure(figsize=(16,7))
+
+# # ==========================================
+# # BAR CHART
+# # ==========================================
+
+# ax = fig.add_axes([0.07,0.15,0.58,0.70])
+
+# bar_colors = []
+
+# for category in performance["Performance Category"]:
+
+#     if category == "High":
+#         bar_colors.append("#58D68D")      # Green
+
+#     elif category == "Medium":
+#         bar_colors.append("#F4D03F")      # Yellow
+
+#     elif category == "Low":
+#         bar_colors.append("#5DADE2")      # Blue
+
+# bars = ax.bar(
+
+#     performance["Performance Category"],
+#     performance["Student Count"],
+
+#     color=bar_colors,
+#     edgecolor="black",
+#     linewidth=1.5,
+#     width=0.55
+# )
+
+# # ==========================================
+# # VALUE LABELS
+# # ==========================================
+
+# for bar in bars:
+
+#     ax.text(
+
+#         bar.get_x()+bar.get_width()/2,
+
+#         bar.get_height()+2,
+
+#         int(bar.get_height()),
+
+#         ha="center",
+
+#         fontsize=13,
+
+#         fontweight="bold"
+#     )
+
+# # ==========================================
+# # TITLE
+# # ==========================================
+
+# ax.set_title(
+
+#     "STUDENT PERFORMANCE CATEGORY DISTRIBUTION",
+
+#     fontsize=20,
+
+#     fontweight="bold"
+
+# )
+
+# ax.set_xlabel(
+
+#     "Performance Category",
+
+#     fontsize=13,
+
+#     fontweight="bold"
+
+# )
+
+# ax.set_ylabel(
+
+#     "Student Count",
+
+#     fontsize=13,
+
+#     fontweight="bold"
+
+# )
+
+# ax.grid(axis="y",linestyle="--",alpha=0.4)
+
+# # ==========================================
+# # KPI BOXES
+# # ==========================================
+
+# fig.text(
+
+#     0.08,0.92,
+
+#     f"Total\n{total_students}",
+
+#     ha="center",
+
+#     fontsize=12,
+
+#     fontweight="bold",
+
+#     bbox=dict(
+#         boxstyle="round",
+#         facecolor="#3498DB",
+#         edgecolor="black"
+#     )
+# )
+
+# fig.text(
+
+#     0.26,0.92,
+
+#     f"High\n{high}",
+
+#     ha="center",
+
+#     fontsize=12,
+
+#     fontweight="bold",
+
+#     bbox=dict(
+#         boxstyle="round",
+#         facecolor="#58D68D",
+#         edgecolor="black"
+#     )
+# )
+
+# fig.text(
+
+#     0.44,0.92,
+
+#     f"Medium\n{medium}",
+
+#     ha="center",
+
+#     fontsize=12,
+
+#     fontweight="bold",
+
+#     bbox=dict(
+#         boxstyle="round",
+#         facecolor="#F4D03F",
+#         edgecolor="black"
+#     )
+# )
+
+# fig.text(
+
+#     0.62,0.92,
+
+#     f"Low\n{low}",
+
+#     ha="center",
+
+#     fontsize=12,
+
+#     fontweight="bold",
+
+#     bbox=dict(
+#         boxstyle="round",
+#         facecolor="#5DADE2",
+#         edgecolor="black"
+#     )
+# )
+
+# # ==========================================
+# # RIGHT SIDE TABLE
+# # ==========================================
+
+# ax_table = fig.add_axes([0.70,0.18,0.26,0.60])
+
+# ax_table.axis("off")
+
+# table = ax_table.table(
+
+#     cellText=performance.values,
+
+#     colLabels=performance.columns,
+
+#     cellLoc="center",
+
+#     loc="center"
+
+# )
+
+# table.auto_set_font_size(False)
+
+# table.set_fontsize(11)
+
+# table.scale(1.25,2)
+
+# # ==========================================
+# # HEADER STYLE
+# # ==========================================
+
+# for col in range(len(performance.columns)):
+
+#     cell = table[(0,col)]
+
+#     cell.set_facecolor("#1F4E78")
+
+#     cell.get_text().set_color("white")
+
+#     cell.get_text().set_weight("bold")
+
+#     cell.set_edgecolor("black")
+
+# # ==========================================
+# # ROW COLORS MATCHING BAR COLORS
+# # ==========================================
+
+# for row in range(1,len(performance)+1):
+
+#     category = performance.iloc[row-1,0]
+
+#     for col in range(len(performance.columns)):
+
+#         cell = table[(row,col)]
+
+#         if category=="High":
+
+#             cell.set_facecolor("#D5F5E3")
+
+#         elif category=="Medium":
+
+#             cell.set_facecolor("#FCF3CF")
+
+#         elif category=="Low":
+
+#             cell.set_facecolor("#D6EAF8")
+
+#         cell.set_edgecolor("black")
+
+#         cell.get_text().set_fontsize(11)
+
+# plt.show()
+
+
+
+# ==========================================
+# REPORT 4 - FINAL EXAM SCORE DISTRIBUTION
+# ==========================================
+
+# import matplotlib.pyplot as plt
+
+# # ==========================================
+# # SCORE DATA
+# # ==========================================
+
+# score = student_details["final_exam_score"]
+
+# print(score.describe())
+
+# # ==========================================
+# # KPI VALUES
+# # ==========================================
+
+# total_students = len(score)
+
+# average_score = round(score.mean(),2)
+
+# highest_score = score.max()
+
+# lowest_score = score.min()
+
+# # ==========================================
+# # FIGURE
+# # ==========================================
+
+# fig = plt.figure(figsize=(16,7))
+
+# # ==========================================
+# # HISTOGRAM
+# # ==========================================
+
+# ax = fig.add_axes([0.07,0.15,0.58,0.70])
+
+# counts, bins, patches = ax.hist(
+#     score,
+#     bins=10,
+#     edgecolor="black",
+#     linewidth=1.2
+# )
+
+# # Different Colors
+
+# colors = [
+#     "#5DADE2",
+#     "#85C1E9",
+#     "#58D68D",
+#     "#F4D03F",
+#     "#F5B041",
+#     "#EC7063",
+#     "#AF7AC5",
+#     "#73C6B6",
+#     "#5499C7",
+#     "#48C9B0"
+# ]
+
+# for patch, color in zip(patches, colors):
+#     patch.set_facecolor(color)
+
+# # Value Labels
+
+# for count, patch in zip(counts, patches):
+
+#     if count > 0:
+
+#         ax.text(
+
+#             patch.get_x()+patch.get_width()/2,
+
+#             count+1,
+
+#             int(count),
+
+#             ha="center",
+
+#             fontsize=10,
+
+#             fontweight="bold"
+
+#         )
+
+# # ==========================================
+# # TITLE
+# # ==========================================
+
+# ax.set_title(
+#     "FINAL EXAM SCORE DISTRIBUTION",
+#     fontsize=20,
+#     fontweight="bold"
+# )
+
+# ax.set_xlabel(
+#     "Final Exam Score",
+#     fontsize=13,
+#     fontweight="bold"
+# )
+
+# ax.set_ylabel(
+#     "Student Count",
+#     fontsize=13,
+#     fontweight="bold"
+# )
+
+# ax.grid(axis="y",linestyle="--",alpha=0.4)
+
+# # ==========================================
+# # KPI BOXES
+# # ==========================================
+
+# fig.text(
+#     0.08,0.92,
+#     f"Total Students\n{total_students}",
+#     ha="center",
+#     fontsize=12,
+#     fontweight="bold",
+#     bbox=dict(boxstyle="round",facecolor="#3498DB",edgecolor="black")
+# )
+
+# fig.text(
+#     0.28,0.92,
+#     f"Average\n{average_score}",
+#     ha="center",
+#     fontsize=12,
+#     fontweight="bold",
+#     bbox=dict(boxstyle="round",facecolor="#58D68D",edgecolor="black")
+# )
+
+# fig.text(
+#     0.48,0.92,
+#     f"Highest\n{highest_score}",
+#     ha="center",
+#     fontsize=12,
+#     fontweight="bold",
+#     bbox=dict(boxstyle="round",facecolor="#F4D03F",edgecolor="black")
+# )
+
+# fig.text(
+#     0.68,0.92,
+#     f"Lowest\n{lowest_score}",
+#     ha="center",
+#     fontsize=12,
+#     fontweight="bold",
+#     bbox=dict(boxstyle="round",facecolor="#EC7063",edgecolor="black")
+# )
+
+# # ==========================================
+# # SUMMARY TABLE
+# # ==========================================
+
+# summary = [
+#     ["Total Students", total_students],
+#     ["Average Score", average_score],
+#     ["Highest Score", highest_score],
+#     ["Lowest Score", lowest_score]
+# ]
+
+# ax_table = fig.add_axes([0.72,0.18,0.26,0.60])
+
+# ax_table.axis("off")
+
+# table = ax_table.table(
+#     cellText=summary,
+#     colLabels=["Metric","Value"],
+#     cellLoc="center",
+#     loc="center"
+# )
+
+# table.auto_set_font_size(False)
+# table.set_fontsize(11)
+# table.scale(1.25,2)
+
+# # Header
+
+# for col in range(2):
+
+#     cell = table[(0,col)]
+
+#     cell.set_facecolor("#1F4E78")
+
+#     cell.get_text().set_color("white")
+
+#     cell.get_text().set_weight("bold")
+
+#     cell.set_edgecolor("black")
+
+# # Row Colors
+
+# row_colors = [
+#     "#D6EAF8",
+#     "#D5F5E3",
+#     "#FCF3CF",
+#     "#FADBD8"
+# ]
+
+# for row in range(1,5):
+
+#     for col in range(2):
+
+#         cell = table[(row,col)]
+
+#         cell.set_facecolor(row_colors[row-1])
+
+#         cell.set_edgecolor("black")
+
+# plt.show()
+
+
+# ==========================================
+# REPORT 5 - STUDENT LEVEL DISTRIBUTION
+# ==========================================
+
+# import matplotlib.pyplot as plt
+
+# # ==========================================
+# # Student Level Count
+# # ==========================================
+
+# level = (
+#     student_details["Student_Level"]
+#     .value_counts()
+#     .sort_index()
+#     .reset_index()
+# )
+
+# level.columns = ["Student Level", "Student Count"]
+
+# print(level)
+
+# # ==========================================
+# # KPI VALUES
+# # ==========================================
+
+# total_students = level["Student Count"].sum()
+
+# # ==========================================
+# # FIGURE
+# # ==========================================
+
+# fig = plt.figure(figsize=(16,7))
+
+# # ==========================================
+# # BAR CHART
+# # ==========================================
+
+# ax = fig.add_axes([0.07,0.15,0.58,0.70])
+
+# colors = [
+#     "#5DADE2",
+#     "#58D68D",
+#     "#F4D03F",
+#     "#EC7063",
+#     "#AF7AC5",
+#     "#48C9B0"
+# ]
+
+# bars = ax.bar(
+#     level["Student Level"],
+#     level["Student Count"],
+#     color=colors[:len(level)],
+#     edgecolor="black",
+#     linewidth=1.5,
+#     width=0.55
+# )
+
+# # ==========================================
+# # VALUE LABELS
+# # ==========================================
+
+# for bar in bars:
+
+#     ax.text(
+#         bar.get_x()+bar.get_width()/2,
+#         bar.get_height()+2,
+#         int(bar.get_height()),
+#         ha="center",
+#         fontsize=12,
+#         fontweight="bold"
+#     )
+
+# # ==========================================
+# # TITLE
+# # ==========================================
+
+# ax.set_title(
+#     "STUDENT LEVEL DISTRIBUTION",
+#     fontsize=20,
+#     fontweight="bold"
+# )
+
+# ax.set_xlabel(
+#     "Student Level",
+#     fontsize=13,
+#     fontweight="bold"
+# )
+
+# ax.set_ylabel(
+#     "Student Count",
+#     fontsize=13,
+#     fontweight="bold"
+# )
+
+# ax.grid(axis="y",linestyle="--",alpha=0.4)
+
+# # ==========================================
+# # KPI BOX
+# # ==========================================
+
+# fig.text(
+#     0.12,0.92,
+#     f"Total Students\n{total_students}",
+#     ha="center",
+#     fontsize=12,
+#     fontweight="bold",
+#     bbox=dict(
+#         boxstyle="round",
+#         facecolor="#3498DB",
+#         edgecolor="black"
+#     )
+# )
+
+# # Dynamic KPI Cards
+
+# x = 0.30
+
+# kpi_colors = [
+#     "#5DADE2",
+#     "#58D68D",
+#     "#F4D03F",
+#     "#EC7063",
+#     "#AF7AC5",
+#     "#48C9B0"
+# ]
+
+# for i,row in level.iterrows():
+
+#     fig.text(
+#         x,
+#         0.92,
+#         f"{row['Student Level']}\n{row['Student Count']}",
+#         ha="center",
+#         fontsize=11,
+#         fontweight="bold",
+#         bbox=dict(
+#             boxstyle="round",
+#             facecolor=kpi_colors[i],
+#             edgecolor="black"
+#         )
+#     )
+
+#     x += 0.16
+
+# # ==========================================
+# # RIGHT SIDE TABLE
+# # ==========================================
+
+# ax_table = fig.add_axes([0.72,0.18,0.26,0.60])
+
+# ax_table.axis("off")
+
+# table = ax_table.table(
+#     cellText=level.values,
+#     colLabels=level.columns,
+#     cellLoc="center",
+#     loc="center"
+# )
+
+# table.auto_set_font_size(False)
+# table.set_fontsize(11)
+# table.scale(1.25,2)
+
+# # Header
+
+# for col in range(len(level.columns)):
+
+#     cell = table[(0,col)]
+
+#     cell.set_facecolor("#1F4E78")
+
+#     cell.get_text().set_color("white")
+
+#     cell.get_text().set_weight("bold")
+
+#     cell.set_edgecolor("black")
+
+# # Row Colors
+
+# row_colors = [
+#     "#D6EAF8",
+#     "#D5F5E3",
+#     "#FCF3CF",
+#     "#FADBD8",
+#     "#E8DAEF",
+#     "#D1F2EB"
+# ]
+
+# for row in range(1,len(level)+1):
+
+#     for col in range(len(level.columns)):
+
+#         cell = table[(row,col)]
+
+#         cell.set_facecolor(row_colors[row-1])
+
+#         cell.set_edgecolor("black")
+
+# plt.show()
+
+# ==========================================
+# REPORT 6 - SLEEP HOURS DISTRIBUTION
+# ==========================================
+
+import matplotlib.pyplot as plt
+
+# ==========================================
+# SLEEP HOURS DATA
+# ==========================================
+
+# sleep = student_details["sleep_hours"]
+
+# print(sleep.describe())
+
+# # ==========================================
+# # KPI VALUES
+# # ==========================================
+
+# total_students = len(sleep)
+
+# average_sleep = round(sleep.mean(),2)
+
+# maximum_sleep = sleep.max()
+
+# minimum_sleep = sleep.min()
+
+# # ==========================================
+# # FIGURE
+# # ==========================================
+
+# fig = plt.figure(figsize=(16,7))
+
+# # ==========================================
+# # HISTOGRAM
+# # ==========================================
+
+# ax = fig.add_axes([0.07,0.15,0.58,0.70])
+
+# counts, bins, patches = ax.hist(
+#     sleep,
+#     bins=10,
+#     edgecolor="black",
+#     linewidth=1.5
+# )
+
+# colors = [
+#     "#5DADE2",
+#     "#58D68D",
+#     "#F4D03F",
+#     "#F5B041",
+#     "#EC7063",
+#     "#AF7AC5",
+#     "#73C6B6",
+#     "#5499C7",
+#     "#48C9B0",
+#     "#BB8FCE"
+# ]
+
+# for patch, color in zip(patches, colors):
+#     patch.set_facecolor(color)
+
+# # ==========================================
+# # VALUE LABELS
+# # ==========================================
+
+# for count, patch in zip(counts, patches):
+
+#     if count > 0:
+
+#         ax.text(
+#             patch.get_x()+patch.get_width()/2,
+#             count+1,
+#             int(count),
+#             ha="center",
+#             fontsize=10,
+#             fontweight="bold"
+#         )
+
+# # ==========================================
+# # TITLE
+# # ==========================================
+
+# ax.set_title(
+#     "SLEEP HOURS DISTRIBUTION",
+#     fontsize=20,
+#     fontweight="bold"
+# )
+
+# ax.set_xlabel(
+#     "Sleep Hours",
+#     fontsize=13,
+#     fontweight="bold"
+# )
+
+# ax.set_ylabel(
+#     "Student Count",
+#     fontsize=13,
+#     fontweight="bold"
+# )
+
+# ax.grid(axis="y",linestyle="--",alpha=0.4)
+
+# # ==========================================
+# # KPI BOXES
+# # ==========================================
+
+# fig.text(
+#     0.08,0.92,
+#     f"Total Students\n{total_students}",
+#     ha="center",
+#     fontsize=12,
+#     fontweight="bold",
+#     bbox=dict(boxstyle="round",facecolor="#3498DB",edgecolor="black")
+# )
+
+# fig.text(
+#     0.28,0.92,
+#     f"Average Sleep\n{average_sleep} hrs",
+#     ha="center",
+#     fontsize=12,
+#     fontweight="bold",
+#     bbox=dict(boxstyle="round",facecolor="#58D68D",edgecolor="black")
+# )
+
+# fig.text(
+#     0.48,0.92,
+#     f"Maximum\n{maximum_sleep} hrs",
+#     ha="center",
+#     fontsize=12,
+#     fontweight="bold",
+#     bbox=dict(boxstyle="round",facecolor="#F4D03F",edgecolor="black")
+# )
+
+# fig.text(
+#     0.68,0.92,
+#     f"Minimum\n{minimum_sleep} hrs",
+#     ha="center",
+#     fontsize=12,
+#     fontweight="bold",
+#     bbox=dict(boxstyle="round",facecolor="#EC7063",edgecolor="black")
+# )
+
+# # ==========================================
+# # SUMMARY TABLE
+# # ==========================================
+
+# summary = [
+#     ["Total Students", total_students],
+#     ["Average Sleep", average_sleep],
+#     ["Maximum Sleep", maximum_sleep],
+#     ["Minimum Sleep", minimum_sleep]
+# ]
+
+# ax_table = fig.add_axes([0.72,0.18,0.26,0.60])
+
+# ax_table.axis("off")
+
+# table = ax_table.table(
+#     cellText=summary,
+#     colLabels=["Metric","Value"],
+#     cellLoc="center",
+#     loc="center"
+# )
+
+# table.auto_set_font_size(False)
+# table.set_fontsize(11)
+# table.scale(1.25,2)
+
+# # Header Style
+
+# for col in range(2):
+
+#     cell = table[(0,col)]
+
+#     cell.set_facecolor("#1F4E78")
+
+#     cell.get_text().set_color("white")
+
+#     cell.get_text().set_weight("bold")
+
+#     cell.set_edgecolor("black")
+
+# # Row Colors
+
+# row_colors = [
+#     "#D6EAF8",
+#     "#D5F5E3",
+#     "#FCF3CF",
+#     "#FADBD8"
+# ]
+
+# for row in range(1,5):
+
+#     for col in range(2):
+
+#         cell = table[(row,col)]
+
+#         cell.set_facecolor(row_colors[row-1])
+
+#         cell.set_edgecolor("black")
+
+# plt.show()
+
+# ==========================================
+# REPORT 7 - STUDY HOURS DISTRIBUTION
+# ==========================================
+
+# import matplotlib.pyplot as plt
+
+# # ==========================================
+# # STUDY HOURS DATA
+# # ==========================================
+
+# study = student_details["study_hours_per_day"]
+
+# print(study.describe())
+
+# # ==========================================
+# # KPI VALUES
+# # ==========================================
+
+# total_students = len(study)
+
+# average_hours = round(study.mean(),2)
+
+# maximum_hours = study.max()
+
+# minimum_hours = study.min()
+
+# # ==========================================
+# # FIGURE
+# # ==========================================
+
+# fig = plt.figure(figsize=(16,7))
+
+# # ==========================================
+# # HISTOGRAM
+# # ==========================================
+
+# ax = fig.add_axes([0.07,0.15,0.58,0.70])
+
+# counts, bins, patches = ax.hist(
+#     study,
+#     bins=10,
+#     edgecolor="black",
+#     linewidth=1.5
+# )
+
+# colors = [
+#     "#5DADE2",
+#     "#58D68D",
+#     "#F4D03F",
+#     "#F5B041",
+#     "#EC7063",
+#     "#AF7AC5",
+#     "#73C6B6",
+#     "#5499C7",
+#     "#48C9B0",
+#     "#BB8FCE"
+# ]
+
+# for patch, color in zip(patches, colors):
+#     patch.set_facecolor(color)
+
+# # ==========================================
+# # VALUE LABELS
+# # ==========================================
+
+# for count, patch in zip(counts, patches):
+
+#     if count > 0:
+
+#         ax.text(
+#             patch.get_x()+patch.get_width()/2,
+#             count+1,
+#             int(count),
+#             ha="center",
+#             fontsize=10,
+#             fontweight="bold"
+#         )
+
+# # ==========================================
+# # TITLE
+# # ==========================================
+
+# ax.set_title(
+#     "STUDY HOURS DISTRIBUTION",
+#     fontsize=20,
+#     fontweight="bold"
+# )
+
+# ax.set_xlabel(
+#     "Study Hours Per Day",
+#     fontsize=13,
+#     fontweight="bold"
+# )
+
+# ax.set_ylabel(
+#     "Student Count",
+#     fontsize=13,
+#     fontweight="bold"
+# )
+
+# ax.grid(axis="y",linestyle="--",alpha=0.4)
+
+# # ==========================================
+# # KPI BOXES
+# # ==========================================
+
+# fig.text(
+#     0.08,0.92,
+#     f"Total Students\n{total_students}",
+#     ha="center",
+#     fontsize=12,
+#     fontweight="bold",
+#     bbox=dict(boxstyle="round",facecolor="#3498DB",edgecolor="black")
+# )
+
+# fig.text(
+#     0.28,0.92,
+#     f"Average\n{average_hours} hrs",
+#     ha="center",
+#     fontsize=12,
+#     fontweight="bold",
+#     bbox=dict(boxstyle="round",facecolor="#58D68D",edgecolor="black")
+# )
+
+# fig.text(
+#     0.48,0.92,
+#     f"Maximum\n{maximum_hours} hrs",
+#     ha="center",
+#     fontsize=12,
+#     fontweight="bold",
+#     bbox=dict(boxstyle="round",facecolor="#F4D03F",edgecolor="black")
+# )
+
+# fig.text(
+#     0.68,0.92,
+#     f"Minimum\n{minimum_hours} hrs",
+#     ha="center",
+#     fontsize=12,
+#     fontweight="bold",
+#     bbox=dict(boxstyle="round",facecolor="#EC7063",edgecolor="black")
+# )
+
+# # ==========================================
+# # SUMMARY TABLE
+# # ==========================================
+
+# summary = [
+#     ["Total Students", total_students],
+#     ["Average Hours", average_hours],
+#     ["Maximum Hours", maximum_hours],
+#     ["Minimum Hours", minimum_hours]
+# ]
+
+# ax_table = fig.add_axes([0.72,0.18,0.26,0.60])
+# ax_table.axis("off")
+
+# table = ax_table.table(
+#     cellText=summary,
+#     colLabels=["Metric","Value"],
+#     cellLoc="center",
+#     loc="center"
+# )
+
+# table.auto_set_font_size(False)
+# table.set_fontsize(11)
+# table.scale(1.25,2)
+
+# # Header Style
+
+# for col in range(2):
+
+#     cell = table[(0,col)]
+
+#     cell.set_facecolor("#1F4E78")
+
+#     cell.get_text().set_color("white")
+
+#     cell.get_text().set_weight("bold")
+
+#     cell.set_edgecolor("black")
+
+# # Row Colors
+
+# row_colors = [
+#     "#D6EAF8",
+#     "#D5F5E3",
+#     "#FCF3CF",
+#     "#FADBD8"
+# ]
+
+# for row in range(1,5):
+
+#     for col in range(2):
+
+#         cell = table[(row,col)]
+
+#         cell.set_facecolor(row_colors[row-1])
+
+#         cell.set_edgecolor("black")
+
+# plt.show()
+
+
+# ==========================================
+# REPORT 8 - LEARNING STYLE DISTRIBUTION
+# ==========================================
+
+# import matplotlib.pyplot as plt
+
+# # Learning Style Count
+
+# learning = (
+#     student_details["learning_style"]
+#     .value_counts()
+#     .reset_index()
+# )
+
+# learning.columns = ["Learning Style","Student Count"]
+
+# print(learning)
+
+# # ==========================================
+# # KPI
+# # ==========================================
+
+# total_students = learning["Student Count"].sum()
+
+# # ==========================================
+# # FIGURE
+# # ==========================================
+
+# fig = plt.figure(figsize=(16,7))
+
+# ax = fig.add_axes([0.07,0.15,0.58,0.70])
+
+# colors=[
+# "#5DADE2",
+# "#58D68D",
+# "#F4D03F",
+# "#EC7063",
+# "#AF7AC5",
+# "#48C9B0"
+# ]
+
+# bars=ax.bar(
+# learning["Learning Style"],
+# learning["Student Count"],
+# color=colors[:len(learning)],
+# edgecolor="black",
+# linewidth=1.5,
+# width=0.55
+# )
+
+# for bar in bars:
+
+#     ax.text(
+#         bar.get_x()+bar.get_width()/2,
+#         bar.get_height()+2,
+#         int(bar.get_height()),
+#         ha="center",
+#         fontsize=12,
+#         fontweight="bold"
+#     )
+
+# ax.set_title(
+# "LEARNING STYLE DISTRIBUTION",
+# fontsize=20,
+# fontweight="bold"
+# )
+
+# ax.set_xlabel(
+# "Learning Style",
+# fontsize=13,
+# fontweight="bold"
+# )
+
+# ax.set_ylabel(
+# "Student Count",
+# fontsize=13,
+# fontweight="bold"
+# )
+
+# ax.grid(axis="y",linestyle="--",alpha=0.4)
+
+# # KPI
+
+# fig.text(
+# 0.12,
+# 0.92,
+# f"Total Students\n{total_students}",
+# ha="center",
+# fontsize=12,
+# fontweight="bold",
+# bbox=dict(boxstyle="round",facecolor="#3498DB",edgecolor="black")
+# )
+
+# x=0.32
+
+# for i,row in learning.iterrows():
+
+#     fig.text(
+#         x,
+#         0.92,
+#         f"{row['Learning Style']}\n{row['Student Count']}",
+#         ha="center",
+#         fontsize=10,
+#         fontweight="bold",
+#         bbox=dict(
+#             boxstyle="round",
+#             facecolor=colors[i],
+#             edgecolor="black"
+#         )
+#     )
+
+#     x+=0.10
+
+# # ==========================================
+# # TABLE
+# # ==========================================
+
+# ax_table=fig.add_axes([0.70,0.18,0.26,0.60])
+
+# ax_table.axis("off")
+
+# table=ax_table.table(
+# cellText=learning.values,
+# colLabels=learning.columns,
+# cellLoc="center",
+# loc="center"
+# )
+
+# table.auto_set_font_size(False)
+
+# table.set_fontsize(11)
+
+# table.scale(1.25,2)
+
+# for col in range(2):
+
+#     cell=table[(0,col)]
+
+#     cell.set_facecolor("#1F4E78")
+
+#     cell.get_text().set_color("white")
+
+#     cell.get_text().set_weight("bold")
+
+#     cell.set_edgecolor("black")
+
+# row_colors=[
+# "#D6EAF8",
+# "#D5F5E3",
+# "#FCF3CF",
+# "#FADBD8",
+# "#E8DAEF",
+# "#D1F2EB"
+# ]
+
+# for row in range(1,len(learning)+1):
+
+#     for col in range(2):
+
+#         cell=table[(row,col)]
+
+#         cell.set_facecolor(row_colors[(row-1)%len(row_colors)])
+
+#         cell.set_edgecolor("black")
+
+# plt.show()
+
+
+# ==========================================
+# TREND REPORT 1
+# STUDY HOURS VS FINAL EXAM SCORE
+# ==========================================
+
+# import matplotlib.pyplot as plt
+# import numpy as np
+
+# # ==========================================
+# # DATA
+# # ==========================================
+
+# trend = student_details.sort_values("study_hours_per_day")
+
+# x = trend["study_hours_per_day"]
+# y = trend["final_exam_score"]
+
+# # ==========================================
+# # KPI VALUES
+# # ==========================================
+
+# total_students = len(trend)
+
+# average_study = round(x.mean(),2)
+
+# average_score = round(y.mean(),2)
+
+# highest_score = y.max()
+
+# lowest_score = y.min()
+
+# # ==========================================
+# # TREND LINE
+# # ==========================================
+
+# z = np.polyfit(x, y, 1)
+# p = np.poly1d(z)
+
+# # ==========================================
+# # FIGURE
+# # ==========================================
+
+# fig = plt.figure(figsize=(16,7))
+
+# ax = fig.add_axes([0.07,0.15,0.58,0.70])
+
+# # ==========================================
+# # SCATTER PLOT
+# # ==========================================
+
+# ax.scatter(
+#     x,
+#     y,
+#     color="#3498DB",
+#     edgecolors="black",
+#     s=60,
+#     alpha=0.8,
+#     label="Students"
+# )
+
+# # ==========================================
+# # TREND LINE
+# # ==========================================
+
+# ax.plot(
+#     x,
+#     p(x),
+#     color="red",
+#     linewidth=3,
+#     label="Trend Line"
+# )
+
+# ax.legend()
+
+# # ==========================================
+# # TITLE
+# # ==========================================
+
+# ax.set_title(
+#     "STUDY HOURS VS FINAL EXAM SCORE",
+#     fontsize=20,
+#     fontweight="bold"
+# )
+
+# ax.set_xlabel(
+#     "Study Hours Per Day",
+#     fontsize=13,
+#     fontweight="bold"
+# )
+
+# ax.set_ylabel(
+#     "Final Exam Score",
+#     fontsize=13,
+#     fontweight="bold"
+# )
+
+# ax.grid(True,linestyle="--",alpha=0.4)
+
+# # ==========================================
+# # KPI BOXES
+# # ==========================================
+
+# fig.text(
+# 0.08,
+# 0.92,
+# f"Total Students\n{total_students}",
+# ha="center",
+# fontsize=12,
+# fontweight="bold",
+# bbox=dict(boxstyle="round",
+# facecolor="#3498DB",
+# edgecolor="black")
+# )
+
+# fig.text(
+# 0.28,
+# 0.92,
+# f"Avg Study Hours\n{average_study}",
+# ha="center",
+# fontsize=12,
+# fontweight="bold",
+# bbox=dict(boxstyle="round",
+# facecolor="#58D68D",
+# edgecolor="black")
+# )
+
+# fig.text(
+# 0.48,
+# 0.92,
+# f"Avg Exam Score\n{average_score}",
+# ha="center",
+# fontsize=12,
+# fontweight="bold",
+# bbox=dict(boxstyle="round",
+# facecolor="#F4D03F",
+# edgecolor="black")
+# )
+
+# fig.text(
+# 0.68,
+# 0.92,
+# f"Highest Score\n{highest_score}",
+# ha="center",
+# fontsize=12,
+# fontweight="bold",
+# bbox=dict(boxstyle="round",
+# facecolor="#EC7063",
+# edgecolor="black")
+# )
+
+# # ==========================================
+# # RIGHT SIDE TABLE
+# # ==========================================
+
+# summary = [
+
+# ["Total Students",total_students],
+
+# ["Average Study Hours",average_study],
+
+# ["Average Exam Score",average_score],
+
+# ["Highest Score",highest_score],
+
+# ["Lowest Score",lowest_score]
+
+# ]
+
+# ax_table = fig.add_axes([0.72,0.18,0.26,0.60])
+
+# ax_table.axis("off")
+
+# table = ax_table.table(
+
+# cellText=summary,
+
+# colLabels=["Metric","Value"],
+
+# cellLoc="center",
+
+# loc="center"
+
+# )
+
+# table.auto_set_font_size(False)
+
+# table.set_fontsize(11)
+
+# table.scale(1.25,2)
+
+# # Header
+
+# for col in range(2):
+
+#     cell = table[(0,col)]
+
+#     cell.set_facecolor("#1F4E78")
+
+#     cell.get_text().set_color("white")
+
+#     cell.get_text().set_weight("bold")
+
+#     cell.set_edgecolor("black")
+
+# # Row Colors
+
+# row_colors = [
+
+# "#D6EAF8",
+
+# "#D5F5E3",
+
+# "#FCF3CF",
+
+# "#FADBD8",
+
+# "#E8DAEF"
+
+# ]
+
+# for row in range(1,6):
+
+#     for col in range(2):
+
+#         cell = table[(row,col)]
+
+#         cell.set_facecolor(row_colors[row-1])
+
+#         cell.set_edgecolor("black")
+
+# plt.show()
+
+# ==========================================
+# TREND REPORT 2
+# SLEEP HOURS VS FINAL EXAM SCORE
+# ==========================================
+
+# import matplotlib.pyplot as plt
+# import numpy as np
+
+# # ==========================================
+# # DATA
+# # ==========================================
+
+# trend = student_details[["sleep_hours", "final_exam_score"]].copy()
+
+# trend = trend.dropna()
+
+# trend = trend.replace([np.inf, -np.inf], np.nan)
+
+# trend = trend.dropna()
+
+# trend = trend.sort_values("sleep_hours")
+
+# x = trend["sleep_hours"].astype(float)
+
+# y = trend["final_exam_score"].astype(float)
+
+# # ==========================================
+# # KPI VALUES
+# # ==========================================
+
+# total_students = len(trend)
+
+# average_sleep = round(x.mean(),2)
+
+# average_score = round(y.mean(),2)
+
+# highest_score = y.max()
+
+# lowest_score = y.min()
+
+# # ==========================================
+# # TREND LINE
+# # ==========================================
+
+# z = np.polyfit(x, y, 1)
+# p = np.poly1d(z)
+
+# # ==========================================
+# # FIGURE
+# # ==========================================
+
+# fig = plt.figure(figsize=(16,7))
+
+# ax = fig.add_axes([0.07,0.15,0.58,0.70])
+
+# # ==========================================
+# # SCATTER PLOT
+# # ==========================================
+
+# ax.scatter(
+#     x,
+#     y,
+#     color="#58D68D",
+#     edgecolors="black",
+#     s=60,
+#     alpha=0.8,
+#     label="Students"
+# )
+
+# # ==========================================
+# # TREND LINE
+# # ==========================================
+
+# ax.plot(
+#     x,
+#     p(x),
+#     color="red",
+#     linewidth=3,
+#     label="Trend Line"
+# )
+
+# ax.legend()
+
+# # ==========================================
+# # TITLE
+# # ==========================================
+
+# ax.set_title(
+#     "SLEEP HOURS VS FINAL EXAM SCORE",
+#     fontsize=20,
+#     fontweight="bold"
+# )
+
+# ax.set_xlabel(
+#     "Sleep Hours",
+#     fontsize=13,
+#     fontweight="bold"
+# )
+
+# ax.set_ylabel(
+#     "Final Exam Score",
+#     fontsize=13,
+#     fontweight="bold"
+# )
+
+# ax.grid(True,linestyle="--",alpha=0.4)
+
+# # ==========================================
+# # KPI BOXES
+# # ==========================================
+
+# fig.text(
+#     0.08,
+#     0.92,
+#     f"Total Students\n{total_students}",
+#     ha="center",
+#     fontsize=12,
+#     fontweight="bold",
+#     bbox=dict(
+#         boxstyle="round",
+#         facecolor="#3498DB",
+#         edgecolor="black"
+#     )
+# )
+
+# fig.text(
+#     0.28,
+#     0.92,
+#     f"Avg Sleep Hours\n{average_sleep}",
+#     ha="center",
+#     fontsize=12,
+#     fontweight="bold",
+#     bbox=dict(
+#         boxstyle="round",
+#         facecolor="#58D68D",
+#         edgecolor="black"
+#     )
+# )
+
+# fig.text(
+#     0.48,
+#     0.92,
+#     f"Avg Exam Score\n{average_score}",
+#     ha="center",
+#     fontsize=12,
+#     fontweight="bold",
+#     bbox=dict(
+#         boxstyle="round",
+#         facecolor="#F4D03F",
+#         edgecolor="black"
+#     )
+# )
+
+# fig.text(
+#     0.68,
+#     0.92,
+#     f"Highest Score\n{highest_score}",
+#     ha="center",
+#     fontsize=12,
+#     fontweight="bold",
+#     bbox=dict(
+#         boxstyle="round",
+#         facecolor="#EC7063",
+#         edgecolor="black"
+#     )
+# )
+
+# # ==========================================
+# # RIGHT SIDE TABLE
+# # ==========================================
+
+# summary = [
+
+#     ["Total Students", total_students],
+
+#     ["Average Sleep Hours", average_sleep],
+
+#     ["Average Exam Score", average_score],
+
+#     ["Highest Score", highest_score],
+
+#     ["Lowest Score", lowest_score]
+
+# ]
+
+# ax_table = fig.add_axes([0.72,0.18,0.26,0.60])
+
+# ax_table.axis("off")
+
+# table = ax_table.table(
+#     cellText=summary,
+#     colLabels=["Metric","Value"],
+#     cellLoc="center",
+#     loc="center"
+# )
+
+# table.auto_set_font_size(False)
+
+# table.set_fontsize(11)
+
+# table.scale(1.25,2)
+
+# # ==========================================
+# # HEADER STYLE
+# # ==========================================
+
+# for col in range(2):
+
+#     cell = table[(0,col)]
+
+#     cell.set_facecolor("#1F4E78")
+
+#     cell.get_text().set_color("white")
+
+#     cell.get_text().set_weight("bold")
+
+#     cell.set_edgecolor("black")
+
+# # ==========================================
+# # ROW COLORS
+# # ==========================================
+
+# row_colors = [
+#     "#D6EAF8",
+#     "#D5F5E3",
+#     "#FCF3CF",
+#     "#FADBD8",
+#     "#E8DAEF"
+# ]
+
+# for row in range(1,6):
+
+#     for col in range(2):
+
+#         cell = table[(row,col)]
+
+#         cell.set_facecolor(row_colors[row-1])
+
+#         cell.set_edgecolor("black")
+
+# plt.show()
+
+# ==========================================
+# FINAL OVERALL DASHBOARD
+# ==========================================
+
+import matplotlib.pyplot as plt
+
+# ==========================================
+# KPI VALUES
+# ==========================================
+
+total_students = len(student_details)
+
+avg_study = round(student_details["study_hours_per_day"].mean(),2)
+
+avg_sleep = round(student_details["sleep_hours"].mean(),2)
+
+avg_score = round(student_details["final_exam_score"].mean(),2)
+
+avg_attendance = round(student_details["attendance_percentage"].mean(),2)
+
+highest_score = student_details["final_exam_score"].max()
+
+# ==========================================
+# DATA
+# ==========================================
+
+gender = student_details["gender"].value_counts()
+
+grade = student_details["Student Grade"].value_counts()
+
+performance = student_details["performance_category"].value_counts()
+
+# ==========================================
+# FIGURE
+# ==========================================
+
+fig = plt.figure(figsize=(20,10))
+
+# ==========================================
+# KPI CARDS
+# ==========================================
+
+fig.text(
+0.06,0.94,
+f"Total Students\n{total_students}",
+ha="center",
+fontsize=12,
+fontweight="bold",
+bbox=dict(boxstyle="round",facecolor="#3498DB",edgecolor="black")
+)
+
+fig.text(
+0.22,0.94,
+f"Avg Study\n{avg_study} hrs",
+ha="center",
+fontsize=12,
+fontweight="bold",
+bbox=dict(boxstyle="round",facecolor="#58D68D",edgecolor="black")
+)
+
+fig.text(
+0.38,0.94,
+f"Avg Sleep\n{avg_sleep} hrs",
+ha="center",
+fontsize=12,
+fontweight="bold",
+bbox=dict(boxstyle="round",facecolor="#F4D03F",edgecolor="black")
+)
+
+fig.text(
+0.54,0.94,
+f"Avg Score\n{avg_score}",
+ha="center",
+fontsize=12,
+fontweight="bold",
+bbox=dict(boxstyle="round",facecolor="#EC7063",edgecolor="black")
+)
+
+fig.text(
+0.70,0.94,
+f"Attendance\n{avg_attendance} %",
+ha="center",
+fontsize=12,
+fontweight="bold",
+bbox=dict(boxstyle="round",facecolor="#AF7AC5",edgecolor="black")
+)
+
+fig.text(
+0.86,0.94,
+f"Highest\n{highest_score}",
+ha="center",
+fontsize=12,
+fontweight="bold",
+bbox=dict(boxstyle="round",facecolor="#48C9B0",edgecolor="black")
+)
+
+# ==========================================
+# GENDER PIE CHART
+# ==========================================
+
+ax1 = fig.add_axes([0.05,0.45,0.28,0.35])
+
+ax1.pie(
+gender,
+labels=gender.index,
+autopct="%1.1f%%",
+startangle=90
+)
+
+ax1.set_title(
+"Gender Distribution",
+fontweight="bold"
+)
+
+# ==========================================
+# STUDENT GRADE BAR
+# ==========================================
+
+ax2 = fig.add_axes([0.38,0.45,0.28,0.35])
+
+bars = ax2.bar(
+grade.index,
+grade.values,
+color=["#3498DB","#58D68D","#F4D03F","#EC7063"]
+)
+
+for bar in bars:
+
+    ax2.text(
+    bar.get_x()+bar.get_width()/2,
+    bar.get_height()+1,
+    int(bar.get_height()),
+    ha="center",
+    fontweight="bold"
+    )
+
+ax2.set_title(
+"Student Grade",
+fontweight="bold"
+)
+
+ax2.grid(axis="y",linestyle="--",alpha=0.4)
+
+# ==========================================
+# PERFORMANCE CATEGORY
+# ==========================================
+
+ax3 = fig.add_axes([0.70,0.45,0.25,0.35])
+
+bars = ax3.bar(
+performance.index,
+performance.values,
+color=["#58D68D","#F4D03F","#5DADE2"]
+)
+
+for bar in bars:
+
+    ax3.text(
+    bar.get_x()+bar.get_width()/2,
+    bar.get_height()+1,
+    int(bar.get_height()),
+    ha="center",
+    fontweight="bold"
+    )
+
+ax3.set_title(
+"Performance Category",
+fontweight="bold"
+)
+
+ax3.grid(axis="y",linestyle="--",alpha=0.4)
+
+# ==========================================
+# SUMMARY TABLE
+# ==========================================
+
+summary=[
+
+["Total Students",total_students],
+
+["Average Study Hours",avg_study],
+
+["Average Sleep Hours",avg_sleep],
+
+["Average Final Score",avg_score],
+
+["Highest Score",highest_score],
+
+["Attendance %",avg_attendance]
+
+]
+
+ax4=fig.add_axes([0.28,0.05,0.44,0.28])
+
+ax4.axis("off")
+
+table=ax4.table(
+
+cellText=summary,
+
+colLabels=["Metric","Value"],
+
+cellLoc="center",
+
+loc="center"
+
+)
+
+table.auto_set_font_size(False)
+
+table.set_fontsize(11)
+
+table.scale(1,2)
+
+# Header
+
+for col in range(2):
+
+    cell=table[(0,col)]
+
+    cell.set_facecolor("#1F4E78")
+
+    cell.get_text().set_color("white")
+
+    cell.get_text().set_weight("bold")
+
+# Row Colors
+
+row_colors=[
+
+"#D6EAF8",
+
+"#D5F5E3",
+
+"#FCF3CF",
+
+"#FADBD8",
+
+"#E8DAEF",
+
+"#D1F2EB"
+
+]
+
+for row in range(1,7):
+
+    for col in range(2):
+
+        cell=table[(row,col)]
+
+        cell.set_facecolor(row_colors[row-1])
+
+        cell.set_edgecolor("black")
+
+plt.suptitle(
+    "STUDENT PERFORMANCE ANALYSIS DASHBOARD",
+    fontsize=24,
+    fontweight="bold",
+    y=0.89
+)
+
+plt.show()
