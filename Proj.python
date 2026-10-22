@@ -1,4 +1,4 @@
-# Project-1-Student Details(Kaggle)
+# Project-1-Student Details
 import pandas as pd
 
 student_details = pd.read_csv(r"C:\Users\nasira\Desktop\Student Details-Project 1.csv")
